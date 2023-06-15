@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 
-export default function Table({rows}) {
+export default function Table({rows, sendProteinToParent, sendCaloriesToParent}) {
     
     const [numRows, setNumRows] = useState(rows.length);
-    const [totalProtein, setTotalProtein] = useState(); // TODO: 
-    const [totalCalories, setTotalCalories] = useState(); // TODO: 
 
     const handleNewEntryKeyDown = (event) => {
         if (event.key === 'Enter') {
@@ -12,11 +10,12 @@ export default function Table({rows}) {
             var name = document.getElementById('enterName').value
             var protein = document.getElementById('enterProtein').value
             var calories = document.getElementById('enterCalories').value
+            // TODO: Database CREATE
             rows.push({
                 id: numRows + 1,
                 name: name,
-                protein: protein,
-                calories: calories
+                protein: Math.max(0, protein), // Defaults entries to 0 to prevent NaN
+                calories: Math.max(0, calories)
             });
             document.getElementById('enterName').value = ""
             document.getElementById('enterProtein').value = ""
@@ -27,12 +26,26 @@ export default function Table({rows}) {
 
     const handleUpdateEntryKeyDown = (event) => {
         if (event.key === 'Enter') {
+            // TODO: Database UPDATE
             console.log("Update Entry");
+            updateTotalCounts();
         }
     }
 
+    const updateTotalCounts = () => {
+        var totalProtein = 0;
+        var totalCalories = 0;
+        for (var i=1; i<=numRows; i++) {
+            totalProtein += parseInt(document.getElementById('enterProtein-'.concat(i)).value);
+            totalCalories += parseInt(document.getElementById('enterCalories-'.concat(i)).value);
+        }
+        sendProteinToParent(totalProtein);
+        sendCaloriesToParent(totalCalories);
+    }
+
     useEffect(()=>{
-    })
+        updateTotalCounts();
+    }, [numRows])
 
     return (
         <div>
@@ -54,9 +67,9 @@ export default function Table({rows}) {
                     ))}
                     <tr>
                         <td>{numRows + 1})</td>
-                        <td><input id="enterName" type="text" onKeyDown={handleNewEntryKeyDown}></input></td>
-                        <td><input id="enterProtein" type="number" onKeyDown={handleNewEntryKeyDown}></input></td>
-                        <td><input id="enterCalories" type="number" onKeyDown={handleNewEntryKeyDown}></input></td>
+                        <td><input id="enterName" type="text" onKeyDown={handleNewEntryKeyDown} placeholder="Food Name"></input></td>
+                        <td><input id="enterProtein" type="number" onKeyDown={handleNewEntryKeyDown} placeholder="Protein (g)"></input></td>
+                        <td><input id="enterCalories" type="number" onKeyDown={handleNewEntryKeyDown} placeholder="Calories (cal)"></input></td>
                     </tr>
                 </tbody>
             </table>

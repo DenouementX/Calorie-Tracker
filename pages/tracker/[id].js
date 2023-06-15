@@ -1,13 +1,25 @@
 import Table from '../../components/table';
 import {getAllTrackerIds} from '../../lib/tracker'
+import {useState} from "react";
 
 export default function Tracker({date, rows}) {
+    const [totalProtein, setTotalProtein] = useState(); 
+    const [totalCalories, setTotalCalories] = useState();
+
+    // Callback Functions
+    const sendProteinToParent = (protein) => {
+        setTotalProtein(protein);
+    };
+    const sendCaloriesToParent = (calories) => {
+        setTotalCalories(calories);
+    };
+
     return (
         <div>
             <p>This page tracks the macros for {date}</p>
-            <p>Protein:</p>
-            <p>Calories:</p>
-            <Table rows={rows}></Table>
+            <p>Protein: {totalProtein}</p>
+            <p>Calories: {totalCalories}</p>
+            <Table rows={rows} sendProteinToParent={sendProteinToParent} sendCaloriesToParent={sendCaloriesToParent}></Table>
         </div>
     );
 }
@@ -22,9 +34,10 @@ export async function getServerSidePaths() {
 }
   
 export async function getServerSideProps({ params }) {
-    // Fetch necessary data for the blog post using params.id
     var date = params.id;
 
+    // TODO: Database READ
+    
     // Sample database return
     var rows = [
         {
