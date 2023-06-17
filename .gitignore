@@ -39,4 +39,7 @@ jspm_packages
 
 .DS_Store
 
+# Database Related Files
 .env
+*.db
+*.db-journal
