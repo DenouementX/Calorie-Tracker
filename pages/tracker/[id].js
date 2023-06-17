@@ -1,6 +1,7 @@
-import Table from '../../components/table';
-import {getAllTrackerIds} from '../../lib/tracker'
-import {useState} from "react";
+import Table from '../../components/table'
+import { getAllTrackerIds } from '../../lib/tracker'
+import { useState, useEffect } from "react"
+import { PrismaClient } from '@prisma/client'
 
 export default function Tracker({date, rows}) {
     const [totalProtein, setTotalProtein] = useState(); 
@@ -19,7 +20,7 @@ export default function Tracker({date, rows}) {
             <p>This page tracks the macros for {date}</p>
             <p>Protein: {totalProtein}</p>
             <p>Calories: {totalCalories}</p>
-            <Table rows={rows} sendProteinToParent={sendProteinToParent} sendCaloriesToParent={sendCaloriesToParent}></Table>
+            <Table rows={rows} sendProteinToParent={sendProteinToParent} sendCaloriesToParent={sendCaloriesToParent} date={date}></Table>
         </div>
     );
 }
@@ -36,41 +37,12 @@ export async function getServerSidePaths() {
 export async function getServerSideProps({ params }) {
     var date = params.id;
 
-    // TODO: Database READ
-    
-    // Sample database return
-    var rows = [
-        {
-            id: "1",
-            name: "Chicken Thighs",
-            protein: 49,
-            calories: 490
-        },
-        {
-            id: "2",
-            name: "White Rice",
-            protein: 4,
-            calories: 242
-        },
-        {
-            id: "3",
-            name: "Beans",
-            protein: 7,
-            calories: 110
-        },
-        {
-            id: "4",
-            name: "Cheese",
-            protein: 7,
-            calories: 110
-        },
-        {
-            id: "5",
-            name: "Yogurt",
-            protein: 11,
-            calories: 60
+    const prisma = new PrismaClient();
+    const rows = await prisma.macros.findMany({
+        where: {
+            date: date
         }
-    ];
+    });
 
     return {
         props: {
