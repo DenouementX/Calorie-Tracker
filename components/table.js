@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
 import axios from 'axios'
+import { useRouter } from "next/router";
 
 export default function Table({rows, sendProteinToParent, sendCaloriesToParent, date}) {
     
     const [numRows, setNumRows] = useState(rows.length);
+    const dynamicRoute = useRouter().asPath;
 
     const handleNewEntryKeyDown = (event) => {
         if (event.key === 'Enter') {
@@ -77,6 +79,12 @@ export default function Table({rows, sendProteinToParent, sendCaloriesToParent, 
         updateTotalCounts();
     }, [numRows])
 
+    // Resets State on Next.js Route Change
+    // As outlined here: https://www.seancdavis.com/posts/resetting-state-on-nextjs-route-change/
+    useEffect(()=>{
+        setNumRows(rows.length);
+    }, [dynamicRoute])
+
     return (
         <div>
             <table>
@@ -88,11 +96,11 @@ export default function Table({rows, sendProteinToParent, sendCaloriesToParent, 
                         <th>Calories</th>
                     </tr>
                     {rows.map(row => (
-                        <tr key={row.index}>
+                        <tr key={date + '.' + row.index}>
                             <td>{row.index})</td>
-                            <td><input id={"enterName-" + row.index} type="text" onKeyDown={handleUpdateEntryKeyDown} defaultValue={row.food}></input></td>
-                            <td><input id={"enterProtein-" + row.index} type="number" onKeyDown={handleUpdateEntryKeyDown} defaultValue={row.protein}></input></td>
-                            <td><input id={"enterCalories-" + row.index} type="number" onKeyDown={handleUpdateEntryKeyDown} defaultValue ={row.calories}></input></td>
+                            <td><input id={"enterName-" + row.index} type="text" defaultValue={row.food}></input></td>
+                            <td><input id={"enterProtein-" + row.index} type="number" defaultValue={row.protein}></input></td>
+                            <td><input id={"enterCalories-" + row.index} type="number" defaultValue ={row.calories}></input></td>
                         </tr>
                     ))}
                     <tr>
