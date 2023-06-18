@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 export default function Table({rows, sendProteinToParent, sendCaloriesToParent, date}) {
     
     const [numRows, setNumRows] = useState(rows.length);
+    const [websiteReload, setWebsiteReload] = useState(false);
     const dynamicRoute = useRouter().asPath;
 
     const handleNewEntryKeyDown = (event) => {
@@ -77,12 +78,15 @@ export default function Table({rows, sendProteinToParent, sendCaloriesToParent, 
 
     useEffect(()=>{
         updateTotalCounts();
-    }, [numRows])
+    }, [numRows, websiteReload])
 
     // Resets State on Next.js Route Change
     // As outlined here: https://www.seancdavis.com/posts/resetting-state-on-nextjs-route-change/
     useEffect(()=>{
         setNumRows(rows.length);
+        // Important in case navigating from one website with x # rows to another with x # rows as well
+        // Next.js will not run the useEffect because numRows stayed the same so we need to force it via websiteReload
+        setWebsiteReload(!websiteReload);
     }, [dynamicRoute])
 
     return (
@@ -96,11 +100,11 @@ export default function Table({rows, sendProteinToParent, sendCaloriesToParent, 
                         <th>Calories</th>
                     </tr>
                     {rows.map(row => (
-                        <tr key={date + '.' + row.index}>
+                        <tr key={date + '-' + row.index}>
                             <td>{row.index})</td>
-                            <td><input id={"enterName-" + row.index} type="text" defaultValue={row.food}></input></td>
-                            <td><input id={"enterProtein-" + row.index} type="number" defaultValue={row.protein}></input></td>
-                            <td><input id={"enterCalories-" + row.index} type="number" defaultValue ={row.calories}></input></td>
+                            <td><input id={"enterName-" + row.index} type="text" onKeyDown={handleUpdateEntryKeyDown} defaultValue={row.food}></input></td>
+                            <td><input id={"enterProtein-" + row.index} type="number" onKeyDown={handleUpdateEntryKeyDown} defaultValue={row.protein}></input></td>
+                            <td><input id={"enterCalories-" + row.index} type="number" onKeyDown={handleUpdateEntryKeyDown} defaultValue ={row.calories}></input></td>
                         </tr>
                     ))}
                     <tr>
