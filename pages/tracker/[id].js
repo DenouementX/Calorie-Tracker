@@ -5,6 +5,7 @@ import { PrismaClient } from '@prisma/client'
 import Calendar from 'react-calendar'
 import { useRouter } from 'next/router'
 import 'react-calendar/dist/Calendar.css';
+import Layout from '../../components/layout'
 
 export default function Tracker({date, rows}) {
     const [totalProtein, setTotalProtein] = useState(); 
@@ -29,16 +30,18 @@ export default function Tracker({date, rows}) {
     }
 
     return (
-        <div>
-            <p>This page tracks the macros for {date}</p>
-            <button onClick={() => setShowCalendar(!showCalendar)}>{showCalendar ? 'Close Calendar' : 'Open Calendar'}</button>
-            <div style={{display: showCalendar ? "block": "none"}}>
-                <Calendar onChange={changeDate} defaultValue={date} />
+        <Layout>
+            <div>
+                <p>This page tracks the macros for {date}</p>
+                <button onClick={() => setShowCalendar(!showCalendar)}>{showCalendar ? 'Close Calendar' : 'Open Calendar'}</button>
+                <div style={{display: showCalendar ? "block": "none"}}>
+                    <Calendar onChange={changeDate} defaultValue={date} />
+                </div>
+                <p>Protein: {totalProtein}</p>
+                <p>Calories: {totalCalories}</p>
+                <Table rows={rows} sendProteinToParent={sendProteinToParent} sendCaloriesToParent={sendCaloriesToParent} date={date}></Table>
             </div>
-            <p>Protein: {totalProtein}</p>
-            <p>Calories: {totalCalories}</p>
-            <Table rows={rows} sendProteinToParent={sendProteinToParent} sendCaloriesToParent={sendCaloriesToParent} date={date}></Table>
-        </div>
+        </Layout>
     );
 }
 
