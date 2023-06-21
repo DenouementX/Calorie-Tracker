@@ -91,7 +91,7 @@ export default function Table({rows, sendProteinToParent, sendCaloriesToParent, 
 
     return (
         <div>
-            <table>
+            <table className="border-separate border-spacing-1.5 pt-3">
                 <tbody>
                     <tr>
                         <th>#</th>

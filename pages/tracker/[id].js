@@ -29,17 +29,43 @@ export default function Tracker({date, rows}) {
         router.push(newDate);
     }
 
+    function getDate(date) {
+        var hyphens = []
+        for (let i = 0; i < date.length; i++) {
+            if (date[i] === ("-")) {
+                hyphens.push(i);
+            }
+        }
+        var day = date.substring(hyphens[1] + 1);
+        var month = date.substring(hyphens[0] + 1, hyphens[1]);
+        var year = date.substring(0, hyphens[0]);
+        const months = ["", "January","February","March","April","May","June","July","August","September","October","November","December"];
+        return months[month] + " " + day + ", " + year;
+    }
+
     return (
         <Layout>
-            <div>
-                <p>This page tracks the macros for {date}</p>
-                <button onClick={() => setShowCalendar(!showCalendar)}>{showCalendar ? 'Close Calendar' : 'Open Calendar'}</button>
-                <div style={{display: showCalendar ? "block": "none"}}>
-                    <Calendar onChange={changeDate} defaultValue={date} />
+            <div className='mt-20 mx-72 border border-borderGray rounded-md shadow-lg shadow-gray bg-backgroundGray p-10 font-mono font-thin'>
+                <div className='text-center text-textBlue'>
+                    <p className='text-5xl'>{getDate(date)}</p>
+                    <button onClick={() => setShowCalendar(!showCalendar)}>{showCalendar ? 'Close Calendar ↑' : 'Open Calendar ↓'}</button>
+                    <div className="flex justify-center items-center" style={{display: showCalendar ? "block": "none"}}>
+                        <Calendar onChange={changeDate} defaultValue={date} />
+                    </div>
+                    <div className='grid grid-cols-2 text-3xl'>
+                        <div className='ml-20'>
+                            <p className='underline underline-offset-4'>Protein</p>
+                            <p>{totalProtein}</p>
+                        </div>
+                        <div className='mr-20'>
+                            <p className='underline underline-offset-4'>Calories</p>
+                            <p>{totalCalories}</p>
+                        </div>
+                    </div>
                 </div>
-                <p>Protein: {totalProtein}</p>
-                <p>Calories: {totalCalories}</p>
-                <Table rows={rows} sendProteinToParent={sendProteinToParent} sendCaloriesToParent={sendCaloriesToParent} date={date}></Table>
+                <div className='flex justify-center items-center'>
+                    <Table rows={rows} sendProteinToParent={sendProteinToParent} sendCaloriesToParent={sendCaloriesToParent} date={date}></Table>
+                </div>
             </div>
         </Layout>
     );
