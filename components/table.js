@@ -91,14 +91,16 @@ export default function Table({rows, sendProteinToParent, sendCaloriesToParent, 
 
     return (
         <div>
-            <table className="border-separate border-spacing-1.5 pt-3">
-                <tbody>
+            <table className="border-separate border-spacing-1.5 pt-3 table-auto">
+                <thead>
                     <tr>
                         <th>#</th>
                         <th>Food Item</th>
                         <th>Protein</th>
                         <th>Calories</th>
                     </tr>
+                </thead>
+                <tbody>
                     {rows.map(row => (
                         <tr key={date + '-' + row.index}>
                             <td>{row.index})</td>

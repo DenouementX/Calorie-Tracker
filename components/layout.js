@@ -8,6 +8,9 @@ export default function Layout({ children }) {
                 <link rel="icon" href="/images/favicon.ico" />
             </Head>
             {children}
+            <footer className="fixed bottom-0 py-3 bg-backgroundGray text-center w-full border border-borderGray">
+                Made with ❤️ by Lawrence Mao
+            </footer>
         </div>
     );
   }
