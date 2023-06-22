@@ -9,7 +9,7 @@ export default function Layout({ children }) {
             </Head>
             {children}
             <footer className="fixed bottom-0 py-3 bg-backgroundGray text-center w-full border border-borderGray">
-                Made with ❤️ by Lawrence Mao
+                Made with 💪🏻 by Lawrence Mao
             </footer>
         </div>
     );
