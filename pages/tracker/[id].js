@@ -45,7 +45,7 @@ export default function Tracker({date, rows}) {
 
     return (
         <Layout>
-            <div className='my-20 mx-72 border border-borderGray rounded-md shadow-lg shadow-gray bg-backgroundGray p-10 font-mono font-thin'>
+            <div className='my-20 xl:mx-72 lg:mx-44 md:mx-20 sm:mx-3 border border-borderGray rounded-md shadow-lg shadow-gray bg-backgroundGray p-10 font-mono font-thin'>
                 <div className='text-center text-textBlue'>
                     <p className='text-5xl'>{getDate(date)}</p>
                     <button onClick={() => setShowCalendar(!showCalendar)}>
@@ -80,7 +80,7 @@ export default function Tracker({date, rows}) {
                         </div>
                     </div>
                 </div>
-                <div className='flex justify-center items-center'>
+                <div className='flex justify-center'>
                     <Table rows={rows} sendProteinToParent={sendProteinToParent} sendCaloriesToParent={sendCaloriesToParent} date={date}></Table>
                 </div>
             </div>
