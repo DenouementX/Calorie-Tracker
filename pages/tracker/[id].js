@@ -1,6 +1,6 @@
 import Table from '../../components/table'
-import { getAllTrackerIds } from '../../lib/tracker'
-import { useState, useEffect } from "react"
+import { getAllTrackerIds, formatDate } from '../../lib/tracker'
+import { useState } from "react"
 import { PrismaClient } from '@prisma/client'
 import Calendar from 'react-calendar'
 import { useRouter } from 'next/router'
@@ -22,11 +22,7 @@ export default function Tracker({date, rows}) {
     };
 
     const changeDate = (date) => {
-        var day = date.getDate();
-        var month = date.getMonth() + 1; // Months from 1-12
-        var year = date.getFullYear();
-        var newDate = year + "-" + month + "-" + day;
-        router.push(newDate);
+        router.push(formatDate(date));
     }
 
     function getDate(date) {

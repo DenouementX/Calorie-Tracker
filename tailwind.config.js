@@ -17,10 +17,16 @@ module.exports = {
       'backgroundBlue': '#E9F8FF',
       'backgroundGray': '#F9F7F7',
       'gray': '#9e9c96',
+      'white': '#fff',
+      'black': '#3c4043',
+      'googleBorderGray': '#dadce0',
+      'hoverBlue': '#ebf4fa',
+      'hoverGoogle': '#aee0fc',
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
+      roboto: ['Roboto', 'sans-serif'],
     },
     extend: {
       spacing: {
