@@ -2,13 +2,17 @@ import Layout from '../components/layout';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import Image from 'next/image';
-import Meat from '../public/images/meat.png'
-import Favicon from '../public/images/favicon.png'
-import { useRouter } from 'next/router'
-import { formatDate } from '../lib/tracker.js'
+import Meat from '../public/images/meat.png';
+import Favicon from '../public/images/favicon.png';
+import { useRouter } from 'next/router';
+import { formatDate } from '../lib/tracker.js';
+import { UserContext } from '../context/userContext';
+import { useContext } from 'react';
+
 
 export default function Home() {
     const router = useRouter();
+    const { user, updateUser } = useContext(UserContext);
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => TEMPNAME(codeResponse),
@@ -24,9 +28,7 @@ export default function Home() {
             }
         })
         .then((res) => {
-            // TODO: Redux state the res.data.id
-            console.log(res.data);
-            console.log(res.data.id);
+            updateUser(res.data.email);
 
             // Redirect user to today's trackers
             var today = new Date();
