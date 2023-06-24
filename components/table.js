@@ -26,7 +26,7 @@ export default function Table({rows, sendRowToParent, sendProteinToParent, sendC
 
             axios.post('/api/addRow', newRow)
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
             })
             .catch(function (error) {
                 console.log(error);
@@ -58,7 +58,7 @@ export default function Table({rows, sendRowToParent, sendProteinToParent, sendC
 
             axios.put('/api/updateRow', newRow)
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
             })
             .catch(function (error) {
                 console.log(error);

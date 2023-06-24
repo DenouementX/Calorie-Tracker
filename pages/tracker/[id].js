@@ -7,6 +7,7 @@ import 'react-calendar/dist/Calendar.css';
 import Layout from '../../components/layout';
 import { UserContext } from '../../context/userContext';
 import axios from 'axios';
+import Unauthorized from '../../components/unauthorized';
 
 export default function Tracker({date}) {
     const dynamicRoute = useRouter().asPath;
@@ -35,6 +36,11 @@ export default function Tracker({date}) {
         router.push(formatDate(date));
     }
 
+    const signOut = () => {
+        updateUser("");
+        router.push("/");
+    }
+
     useEffect(()=>{
         setNumRows(rows.length);
     }, [rows])
@@ -52,7 +58,7 @@ export default function Tracker({date}) {
         }
         axios.get('/api/macros', {params: query})
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
             setRows(response.data);
         })
         .catch(function (error) {
@@ -62,10 +68,11 @@ export default function Tracker({date}) {
 
     return (
         <Layout>
-            <div className='my-20 xl:mx-72 lg:mx-44 md:mx-20 sm:mx-3 border border-borderGray rounded-md shadow-lg shadow-gray bg-backgroundGray p-10 font-mono font-thin text-center text-textBlue'>
-                {user.length === 0 ? <h1 className='text-3xl'>You are not signed in : (</h1> :
+            <div className='relative my-20 xl:mx-72 lg:mx-44 md:mx-20 sm:mx-3 border border-borderGray rounded-md shadow-lg shadow-gray bg-backgroundGray p-10 font-mono font-thin text-center text-textBlue'>
+                {user.length === 0 ? <Unauthorized router={router} />:
                     <div>
                         <div className=''>
+                            <button className='absolute right-4 top-4 rounded-xl px-2 py-1 shadow-md shadow-gray bg-white border transition ease-in-out delay-50 hover:scale-110 hover:bg-hoverBlue hover:border-hoverGoogle border-googleBorderGray tracking-wide' onClick={signOut}>Sign Out</button>
                             <p>Currently signed in as: {user}</p>
                             <p className='text-5xl'>{getDisplayDate(date)}</p>
                             <button onClick={() => setShowCalendar(!showCalendar)}>
