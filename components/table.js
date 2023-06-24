@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from 'axios';
 import { useRouter } from "next/router";
+import { UserContext } from '../context/userContext';
 
-export default function Table({rows, sendProteinToParent, sendCaloriesToParent, date}) {
+export default function Table({rows, sendRowToParent, sendProteinToParent, sendCaloriesToParent, numRows, date}) {
     
-    const [numRows, setNumRows] = useState(rows.length);
     const [websiteReload, setWebsiteReload] = useState(false);
     const dynamicRoute = useRouter().asPath;
+    const { user, updateUser } = useContext(UserContext);
 
     const handleNewEntryKeyDown = (event) => {
         if (event.key === 'Enter') {
@@ -15,6 +16,7 @@ export default function Table({rows, sendProteinToParent, sendCaloriesToParent, 
             var calories = document.getElementById('enterCalories').value;
 
             var newRow = {
+                user: user,
                 date: date,
                 index: numRows + 1,
                 food: food,
@@ -30,11 +32,10 @@ export default function Table({rows, sendProteinToParent, sendCaloriesToParent, 
                 console.log(error);
             });
 
-            rows.push(newRow);
+            sendRowToParent(newRow);
             document.getElementById('enterName').value = ""
             document.getElementById('enterProtein').value = ""
             document.getElementById('enterCalories').value = ""
-            setNumRows(numRows + 1);
         }
     }
 
@@ -46,12 +47,14 @@ export default function Table({rows, sendProteinToParent, sendCaloriesToParent, 
             var calories = parseInt(document.getElementById('enterCalories-'+index).value);
 
             var newRow = {
+                user: user,
                 date: date,
                 index: index,
                 food: food,
                 protein: protein,
                 calories: calories
             };
+            console.log(newRow);
 
             axios.put('/api/updateRow', newRow)
             .then(function (response) {
@@ -83,7 +86,6 @@ export default function Table({rows, sendProteinToParent, sendCaloriesToParent, 
     // Resets State on Next.js Route Change
     // As outlined here: https://www.seancdavis.com/posts/resetting-state-on-nextjs-route-change/
     useEffect(()=>{
-        setNumRows(rows.length);
         // Important in case navigating from one website with x # rows to another with x # rows as well
         // Next.js will not run the useEffect because numRows stayed the same so we need to force it via websiteReload
         setWebsiteReload(!websiteReload);

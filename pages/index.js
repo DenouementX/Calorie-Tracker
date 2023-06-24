@@ -32,7 +32,8 @@ export default function Home() {
 
             // Redirect user to today's trackers
             var today = new Date();
-            router.push("tracker/" + formatDate(today));
+            var redirect = "tracker/" + formatDate(today);
+            router.push(redirect);
         })
         .catch((err) => console.log(err));
     }

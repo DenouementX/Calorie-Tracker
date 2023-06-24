@@ -11,11 +11,12 @@ datasource db {
 }
 
 model Macros {
+  user      String
   date      String
   index     Int
   food      String
   protein   Int
   calories  Int
 
-  @@unique([date, index])
+  @@unique([user, date, index])
 }

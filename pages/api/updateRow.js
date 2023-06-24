@@ -12,6 +12,9 @@ export default async function handle(req, res) {
                 },
                 {
                     index: data.index
+                },
+                {
+                    user: data.user
                 }
             ]
         },

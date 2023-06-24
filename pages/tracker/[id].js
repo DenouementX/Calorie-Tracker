@@ -1,14 +1,17 @@
 import Table from '../../components/table';
-import { getAllTrackerIds, formatDate } from '../../lib/tracker';
-import { useContext, useState } from "react";
-import { PrismaClient } from '@prisma/client';
+import { getAllTrackerIds, formatDate, getDisplayDate } from '../../lib/tracker';
+import { useContext, useEffect, useState } from "react";
 import Calendar from 'react-calendar';
 import { useRouter } from 'next/router';
 import 'react-calendar/dist/Calendar.css';
 import Layout from '../../components/layout';
 import { UserContext } from '../../context/userContext';
+import axios from 'axios';
 
-export default function Tracker({date, rows}) {
+export default function Tracker({date}) {
+    const dynamicRoute = useRouter().asPath;
+    const [rows, setRows] = useState([])
+    const [numRows, setNumRows] = useState(0);
     const [totalProtein, setTotalProtein] = useState(); 
     const [totalCalories, setTotalCalories] = useState();
     const [showCalendar, setShowCalendar] = useState(false);
@@ -22,24 +25,36 @@ export default function Tracker({date, rows}) {
     const sendCaloriesToParent = (calories) => {
         setTotalCalories(calories);
     };
+    const sendRowToParent = (row) => {
+        var tempRows = rows.slice(); // https://stackoverflow.com/questions/25937369/react-component-not-re-rendering-on-state-change
+        tempRows.push(row);
+        setRows(tempRows);
+    }
 
     const changeDate = (date) => {
         router.push(formatDate(date));
     }
 
-    function getDate(date) {
-        var hyphens = []
-        for (let i = 0; i < date.length; i++) {
-            if (date[i] === ("-")) {
-                hyphens.push(i);
-            }
+    useEffect(()=>{
+        setNumRows(rows.length);
+    }, [rows])
+
+    // Resets State on Next.js Route Change
+    // As outlined here: https://www.seancdavis.com/posts/resetting-state-on-nextjs-route-change/
+    useEffect(()=>{
+        var query = {
+            user: user,
+            date: date
         }
-        var day = date.substring(hyphens[1] + 1);
-        var month = date.substring(hyphens[0] + 1, hyphens[1]);
-        var year = date.substring(0, hyphens[0]);
-        const months = ["", "January","February","March","April","May","June","July","August","September","October","November","December"];
-        return months[month] + " " + day + ", " + year;
-    }
+        axios.get('/api/macros', {params: query})
+        .then(function (response) {
+            console.log(response);
+            setRows(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }, [dynamicRoute])
 
     return (
         <Layout>
@@ -48,7 +63,7 @@ export default function Tracker({date, rows}) {
                     <div>
                         <div className=''>
                             <p>Currently signed in as: {user}</p>
-                            <p className='text-5xl'>{getDate(date)}</p>
+                            <p className='text-5xl'>{getDisplayDate(date)}</p>
                             <button onClick={() => setShowCalendar(!showCalendar)}>
                                 {showCalendar ? 
                                     <div className='flex'>
@@ -82,7 +97,7 @@ export default function Tracker({date, rows}) {
                             </div>
                         </div>
                         <div className='flex justify-center'>
-                            <Table rows={rows} sendProteinToParent={sendProteinToParent} sendCaloriesToParent={sendCaloriesToParent} date={date}></Table>
+                            <Table rows={rows} sendRowToParent={sendRowToParent} sendProteinToParent={sendProteinToParent} sendCaloriesToParent={sendCaloriesToParent} numRows={numRows} date={date}></Table>
                         </div>
                     </div>
                 }
@@ -103,17 +118,9 @@ export async function getServerSidePaths() {
 export async function getServerSideProps({ params }) {
     var date = params.id;
 
-    const prisma = new PrismaClient();
-    const rows = await prisma.macros.findMany({
-        where: {
-            date: date
-        }
-    });
-
     return {
         props: {
-            date,
-            rows
+            date
         }
     };
 }

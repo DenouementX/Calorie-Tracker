@@ -6,6 +6,7 @@ export default async function handle(req, res) {
     var data = req.body;
     const macro = await prisma.macros.create({
         data: {
+            user: data.user,
             date: data.date,
             index: data.index,
             food: data.food,

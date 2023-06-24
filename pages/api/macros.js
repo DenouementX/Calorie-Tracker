@@ -3,6 +3,18 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export default async function handle(req, res) {
-  const macros = await prisma.macros.findMany()
+  var data = req.query;
+  const macros = await prisma.macros.findMany({
+    where: {
+        AND: [
+            {
+                date: data.date
+            },
+            {
+                user: data.user
+            }
+        ]
+    },
+  })
   res.json(macros)
 }
