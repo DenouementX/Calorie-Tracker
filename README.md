@@ -9,8 +9,6 @@ A website to help you keep track of protein and caloric intake. The frontend is 
     - [x] Create an authentication/sign-in page
     - [x] Fix rows not rerendering
     - [x] Create log out button in tracker page
-- [ ] Add finishing touches
-    - [ ] Tab to enter on last column
 - [ ] Host the website
 
 ## Developer Notes (for Mac)
