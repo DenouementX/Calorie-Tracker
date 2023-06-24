@@ -42,6 +42,10 @@ export default function Tracker({date}) {
     // Resets State on Next.js Route Change
     // As outlined here: https://www.seancdavis.com/posts/resetting-state-on-nextjs-route-change/
     useEffect(()=>{
+        // Reset state so react rerenders rows correctly
+        setRows([]);
+        setNumRows(0);
+
         var query = {
             user: user,
             date: date

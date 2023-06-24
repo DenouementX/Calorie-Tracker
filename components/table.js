@@ -7,7 +7,7 @@ export default function Table({rows, sendRowToParent, sendProteinToParent, sendC
     
     const [websiteReload, setWebsiteReload] = useState(false);
     const dynamicRoute = useRouter().asPath;
-    const { user, updateUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     const handleNewEntryKeyDown = (event) => {
         if (event.key === 'Enter') {
