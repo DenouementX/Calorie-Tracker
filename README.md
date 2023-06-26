@@ -1,6 +1,8 @@
 # Calorie-Tracker
 A website to help you keep track of protein and caloric intake. The frontend is built using React and Tailwind CSS while the backend is powered by Next.js, Prisma to run an instance of a PostgreSQL database hosted with Amazon RDS, and OAuth 2.0 to access Google APIs.
 
+Website Link: [calorie-tracker-bay.vercel.app](https://calorie-tracker-bay.vercel.app/)
+
 ## TODO
 - [x] Set up database to read and write macros from
 - [x] Implement calendar feature to select dates from a dropdown
