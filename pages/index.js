@@ -14,11 +14,11 @@ export default function Home() {
     const { user, updateUser } = useContext(UserContext);
 
     const login = useGoogleLogin({
-        onSuccess: (codeResponse) => TEMPNAME(codeResponse),
+        onSuccess: (codeResponse) => getEmail(codeResponse),
         onError: (error) => console.log('Login Failed:', error)
     });
 
-    const TEMPNAME = (user) => {
+    const getEmail = (user) => {
         axios
         .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
             headers: {

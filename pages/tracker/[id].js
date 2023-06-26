@@ -68,13 +68,13 @@ export default function Tracker({date}) {
 
     return (
         <Layout>
-            <div className='relative my-20 xl:mx-72 lg:mx-44 md:mx-20 sm:mx-3 xs:mx-3 border border-borderGray rounded-md shadow-lg shadow-gray bg-backgroundGray p-10 font-mono font-thin text-center text-textBlue'>
+            <div className='relative my-20 xs:my-12 xl:mx-72 lg:mx-44 md:mx-20 sm:mx-3 xs:mx-3 border border-borderGray rounded-md shadow-lg shadow-gray bg-backgroundGray p-10 font-mono font-thin text-center text-textBlue'>
                 {user.length === 0 ? <Unauthorized router={router} />:
                     <div>
                         <div className=''>
                             <button className='absolute right-4 top-4 rounded-xl px-2 py-1 shadow-md shadow-gray bg-white border transition ease-in-out delay-50 hover:scale-110 hover:bg-hoverBlue hover:border-hoverGoogle border-googleBorderGray tracking-wide' onClick={signOut}>Sign Out</button>
                             <p>Currently signed in as: {user}</p>
-                            <p className='text-5xl'>{getDisplayDate(date)}</p>
+                            <p className='text-5xl xs:text-4xl'>{getDisplayDate(date)}</p>
                             <button onClick={() => setShowCalendar(!showCalendar)}>
                                 {showCalendar ? 
                                     <div className='flex'>

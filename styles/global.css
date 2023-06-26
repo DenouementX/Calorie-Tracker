@@ -10,3 +10,12 @@ input {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 }
+
+@layer components {
+    .input-short {
+        @apply xl:w-32 lg:w-32 md:w-24 sm:w-24 xs:w-16
+    }
+    .input-long {
+        @apply xl:w-72 lg:w-72 md:w-52 sm:w-52 xs:w-32
+    }
+  }

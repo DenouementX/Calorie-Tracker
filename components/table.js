@@ -106,16 +106,16 @@ export default function Table({rows, sendRowToParent, sendProteinToParent, sendC
                     {rows.map(row => (
                         <tr key={date + '-' + row.index}>
                             <td>{row.index})</td>
-                            <td className='transition ease-in-out delay-50 hover:scale-110'><input id={"enterName-" + row.index} type="text" onKeyDown={handleUpdateEntryKeyDown} defaultValue={row.food}></input></td>
-                            <td className='transition ease-in-out delay-50 hover:scale-110'><input id={"enterProtein-" + row.index} type="number" onKeyDown={handleUpdateEntryKeyDown} defaultValue={row.protein}></input></td>
-                            <td className='transition ease-in-out delay-50 hover:scale-110'><input id={"enterCalories-" + row.index} type="number" onKeyDown={handleUpdateEntryKeyDown} defaultValue ={row.calories}></input></td>
+                            <td className='transition ease-in-out delay-50 hover:scale-110'><input className='input-long' id={"enterName-" + row.index} type="text" onKeyDown={handleUpdateEntryKeyDown} defaultValue={row.food}></input></td>
+                            <td className='transition ease-in-out delay-50 hover:scale-110'><input className='input-short' id={"enterProtein-" + row.index} type="number" onKeyDown={handleUpdateEntryKeyDown} defaultValue={row.protein}></input></td>
+                            <td className='transition ease-in-out delay-50 hover:scale-110'><input className='input-short' id={"enterCalories-" + row.index} type="number" onKeyDown={handleUpdateEntryKeyDown} defaultValue ={row.calories}></input></td>
                         </tr>
                     ))}
                     <tr>
                         <td>{numRows + 1})</td>
-                        <td className='transition ease-in-out delay-50 hover:scale-110'><input id="enterName" type="text" onKeyDown={handleNewEntryKeyDown} placeholder="Food Name"></input></td>
-                        <td className='transition ease-in-out delay-50 hover:scale-110'><input id="enterProtein" type="number" onKeyDown={handleNewEntryKeyDown} placeholder="Protein (g)"></input></td>
-                        <td className='transition ease-in-out delay-50 hover:scale-110'><input id="enterCalories" type="number" onKeyDown={handleNewEntryKeyDown} placeholder="Calories (cal)"></input></td>
+                        <td className='transition ease-in-out delay-50 hover:scale-110'><input className='input-long' id="enterName" type="text" onKeyDown={handleNewEntryKeyDown} placeholder="Food Name"></input></td>
+                        <td className='transition ease-in-out delay-50 hover:scale-110'><input className='input-short' id="enterProtein" type="number" onKeyDown={handleNewEntryKeyDown} placeholder="Protein (g)"></input></td>
+                        <td className='transition ease-in-out delay-50 hover:scale-110'><input className='input-short' id="enterCalories" type="number" onKeyDown={handleNewEntryKeyDown} placeholder="Calories (cal)"></input></td>
                     </tr>
                 </tbody>
             </table>
