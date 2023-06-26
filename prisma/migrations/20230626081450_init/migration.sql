@@ -1,5 +1,6 @@
 -- CreateTable
 CREATE TABLE "Macros" (
+    "user" TEXT NOT NULL,
     "date" TEXT NOT NULL,
     "index" INTEGER NOT NULL,
     "food" TEXT NOT NULL,
@@ -8,4 +9,4 @@ CREATE TABLE "Macros" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Macros_date_index_key" ON "Macros"("date", "index");
+CREATE UNIQUE INDEX "Macros_user_date_index_key" ON "Macros"("user", "date", "index");
