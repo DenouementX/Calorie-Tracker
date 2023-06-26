@@ -68,7 +68,7 @@ export default function Tracker({date}) {
 
     return (
         <Layout>
-            <div className='relative my-20 xl:mx-72 lg:mx-44 md:mx-20 sm:mx-3 border border-borderGray rounded-md shadow-lg shadow-gray bg-backgroundGray p-10 font-mono font-thin text-center text-textBlue'>
+            <div className='relative my-20 xl:mx-72 lg:mx-44 md:mx-20 sm:mx-3 xs:mx-3 border border-borderGray rounded-md shadow-lg shadow-gray bg-backgroundGray p-10 font-mono font-thin text-center text-textBlue'>
                 {user.length === 0 ? <Unauthorized router={router} />:
                     <div>
                         <div className=''>
@@ -97,11 +97,11 @@ export default function Tracker({date}) {
                                 <Calendar onChange={changeDate} defaultValue={date} />
                             </div>
                             <div className='grid grid-cols-2 text-3xl'>
-                                <div className='ml-20'>
+                                <div className='ml-20 xs:ml-5'>
                                     <p className='underline underline-offset-4'>Protein</p>
                                     <p>{totalProtein}</p>
                                 </div>
-                                <div className='mr-20'>
+                                <div className='mr-20 xs:mr-5'>
                                     <p className='underline underline-offset-4'>Calories</p>
                                     <p>{totalCalories}</p>
                                 </div>

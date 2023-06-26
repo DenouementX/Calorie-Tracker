@@ -9,7 +9,6 @@ import { formatDate } from '../lib/tracker.js';
 import { UserContext } from '../context/userContext';
 import { useContext } from 'react';
 
-
 export default function Home() {
     const router = useRouter();
     const { user, updateUser } = useContext(UserContext);
@@ -40,10 +39,10 @@ export default function Home() {
 
     return (
         <Layout>
-            <div className='relative xl:my-36 lg:my-20 md:my-16 sm:my-12 xl:mx-72 lg:mx-44 md:mx-20 sm:mx-3 border border-borderGray rounded-md shadow-lg shadow-gray bg-backgroundGray py-10 xl:px-28 lg:px-20 md:px-16 sm:px-10 font-mono font-thin text-center text-textBlue'>
-                <Image className='absolute left-10 top-8 md:w-24 sm:w-0' src={Meat} alt="Food"/>
-                <p className='text-5xl underline underline-offset-8 pt-5'>Calorie Tracker</p>
-                <Image className='absolute right-10 top-8 md:w-24 sm:w-0' src={Favicon} alt="Food"/>
+            <div className='relative xl:my-36 lg:my-20 md:my-16 sm:my-12 xs:my-9 xl:mx-72 lg:mx-44 md:mx-20 sm:mx-3 xs:mx-3 border border-borderGray rounded-md shadow-lg shadow-gray bg-backgroundGray py-10 xl:px-28 lg:px-20 md:px-16 sm:px-10 xs:px-10 font-mono font-thin text-center text-textBlue'>
+                <Image className='absolute left-10 top-8 md:w-24 sm:w-0 xs:w-0' src={Meat} alt="Food"/>
+                <p className='text-5xl xs:text-4xl underline underline-offset-8 pt-5'>Calorie Tracker</p>
+                <Image className='absolute right-10 top-8 md:w-24 sm:w-0 xs:w-0' src={Favicon} alt="Food"/>
                 <p className='pt-12 pb-8 text-2xl'>Welcome to Calorie Tracker, a website that lets you manage your macro intake. To get started, click the button below to sign in via Google:</p>
                 <div>
                     <button className='bg-white border transition ease-in-out delay-50 hover:scale-110 hover:bg-hoverBlue hover:border-hoverGoogle border-googleBorderGray rounded-full' onClick={login}>
