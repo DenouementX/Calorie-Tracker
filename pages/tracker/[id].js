@@ -32,6 +32,22 @@ export default function Tracker({date}) {
         setRows(tempRows);
     }
 
+    const yesterday = () => {
+        var dateParts = date.split("-");
+        // month is 0-based, that's why we need dateParts[1] - 1
+        var newDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+        newDate.setDate(newDate.getDate() - 1);
+        changeDate(newDate);
+    }
+
+    const tomorrow = () => {
+        var dateParts = date.split("-");
+        // month is 0-based, that's why we need dateParts[1] - 1
+        var newDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+        newDate.setDate(newDate.getDate() + 1);
+        changeDate(newDate);
+    }
+
     const changeDate = (date) => {
         router.push(formatDate(date));
     }
@@ -74,7 +90,19 @@ export default function Tracker({date}) {
                         <div className=''>
                             <button className='absolute right-4 top-4 rounded-xl px-2 py-1 shadow-md shadow-gray bg-white border transition ease-in-out delay-50 hover:scale-110 hover:bg-hoverBlue hover:border-hoverGoogle border-googleBorderGray tracking-wide' onClick={signOut}>Sign Out</button>
                             <p>Currently signed in as: {user}</p>
-                            <p className='text-5xl xs:text-4xl'>{getDisplayDate(date)}</p>
+                            <div className='flex items-center justify-center'>
+                                <button onClick={yesterday}>
+                                    <svg className="w-10 h-10 text-textBlue" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                    </svg>
+                                </button>
+                                <p className='text-5xl xs:text-4xl px-4'>{getDisplayDate(date)}</p>
+                                <button onClick={tomorrow}>
+                                    <svg className="w-10 h-10 text-textBlue" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                    </svg>
+                                </button>
+                            </div>
                             <button onClick={() => setShowCalendar(!showCalendar)}>
                                 {showCalendar ? 
                                     <div className='flex'>
@@ -96,7 +124,7 @@ export default function Tracker({date}) {
                             <div className="justify-center" style={{display: showCalendar ? "flex": "none"}}>
                                 <Calendar onChange={changeDate} defaultValue={date} />
                             </div>
-                            <div className='grid grid-cols-2 text-3xl'>
+                            <div className='grid grid-cols-2 text-3xl xs:text-2xl'>
                                 <div className='ml-20 xs:ml-5'>
                                     <p className='underline underline-offset-4'>Protein</p>
                                     <p>{totalProtein}</p>
