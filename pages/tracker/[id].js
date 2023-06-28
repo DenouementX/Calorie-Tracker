@@ -1,5 +1,5 @@
 import Table from '../../components/table';
-import { getAllTrackerIds, formatDate, getDisplayDate } from '../../lib/tracker';
+import { getAllTrackerIds, formatDate, getDisplayDate, convertToDate } from '../../lib/tracker';
 import { useContext, useEffect, useState } from "react";
 import Calendar from 'react-calendar';
 import { useRouter } from 'next/router';
@@ -122,7 +122,8 @@ export default function Tracker({date}) {
                                 }
                             </button>
                             <div className="justify-center" style={{display: showCalendar ? "flex": "none"}}>
-                                <Calendar onChange={changeDate} defaultValue={date} />
+                                {/* Need to convert to Date object because Safari won't accept Date in YYYY-MM-DD format */}
+                                <Calendar onChange={changeDate} defaultValue={convertToDate(date)} />
                             </div>
                             <div className='grid grid-cols-2 text-3xl xs:text-2xl'>
                                 <div className='ml-20 xs:ml-5'>
